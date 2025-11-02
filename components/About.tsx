@@ -1,19 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Founder } from '../constants';
-import { CameraIcon, XIcon, RefreshCwIcon } from './Icons';
+import { CameraIcon, XIcon, RefreshCwIcon, UploadIcon } from './Icons';
 
 const defaultImage = "https://source.unsplash.com/300x300/?portrait,man,ceo,african,professional";
 
 const About: React.FC = () => {
     const [imageSrc, setImageSrc] = useState<string>(defaultImage);
     const [showCamera, setShowCamera] = useState<boolean>(false);
+    const [showOptions, setShowOptions] = useState<boolean>(false);
     const [stream, setStream] = useState<MediaStream | null>(null);
     const [error, setError] = useState<string | null>(null);
 
     const videoRef = useRef<HTMLVideoElement>(null);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const optionsRef = useRef<HTMLDivElement>(null);
 
     const openCamera = async () => {
+        setShowOptions(false);
         setError(null);
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
             try {
@@ -35,6 +39,19 @@ const About: React.FC = () => {
             videoRef.current.play();
         }
     }, [showCamera, stream]);
+    
+    // Click outside handler for options popover
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (optionsRef.current && !optionsRef.current.contains(event.target as Node)) {
+                setShowOptions(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
     const closeCamera = () => {
         if (stream) {
@@ -60,6 +77,24 @@ const About: React.FC = () => {
         }
     };
     
+    const handleUploadClick = () => {
+        setShowOptions(false);
+        fileInputRef.current?.click();
+    };
+    
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                if(e.target?.result) {
+                    setImageSrc(e.target.result as string);
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const resetPhoto = () => {
         setImageSrc(defaultImage);
     }
@@ -85,19 +120,38 @@ const About: React.FC = () => {
                     </div>
                     <div className="flex flex-col md:flex-row items-center justify-center gap-12 max-w-5xl mx-auto bg-gray-50 p-8 md:p-12 rounded-lg border border-gray-200 shadow-sm">
                         <div className="md:w-1/3 text-center flex-shrink-0">
-                            <div className="relative group w-48 h-48 mx-auto">
+                             <input
+                                type="file"
+                                ref={fileInputRef}
+                                onChange={handleFileChange}
+                                accept="image/*"
+                                className="hidden"
+                            />
+                            <div ref={optionsRef} className="relative group w-48 h-48 mx-auto">
                                 <img
                                     src={imageSrc}
                                     alt={Founder.name}
                                     className="w-48 h-48 rounded-full object-cover shadow-lg border-4 border-white"
                                 />
                                 <button
-                                    onClick={openCamera}
+                                    onClick={() => setShowOptions(prev => !prev)}
                                     className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                     aria-label="Changer la photo de profil"
                                 >
                                     <CameraIcon className="w-8 h-8" />
                                 </button>
+                                {showOptions && (
+                                    <div className="absolute top-full mt-2 w-52 bg-white rounded-md shadow-lg border border-gray-200 z-10">
+                                        <button onClick={openCamera} className="w-full text-left flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            <CameraIcon className="w-5 h-5" />
+                                            Prendre une photo
+                                        </button>
+                                        <button onClick={handleUploadClick} className="w-full text-left flex items-center gap-3 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                            <UploadIcon className="w-5 h-5" />
+                                            Télécharger une photo
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                              {imageSrc !== defaultImage && (
                                 <button 
