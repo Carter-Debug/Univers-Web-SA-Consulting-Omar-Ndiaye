@@ -8,21 +8,23 @@ export const SERVICES: Service[] = [
 ];
 
 export const TESTIMONIALS: Testimonial[] = [
-  { name: 'Aïssatou Diallo', role: 'Entrepreneur', company: 'Sira Couture', quote: "Univers Web a transformé ma vision en une réalité numérique. Mon site vitrine est magnifique et attire de nouveaux clients chaque jour.", image: 'https://picsum.photos/id/237/100/100' },
-  { name: 'Moussa Diop', role: 'E-commerçant', company: 'Dakar Deals', quote: "Leur équipe a développé une boutique e-commerce robuste qui a doublé nos ventes en 6 mois. Un service impeccable.", image: 'https://picsum.photos/id/238/100/100' },
-  { name: 'Fatima Gueye', role: 'Directrice', company: 'Fondation Espoir', quote: "Le site créé pour notre ONG nous a permis de toucher plus de donateurs. Leur professionnalisme est remarquable.", image: 'https://picsum.photos/id/239/100/100' },
-  { name: 'Jean-Pierre Dubois', role: 'PDG', company: 'Innovatech Solutions', quote: "Un site d'entreprise qui reflète parfaitement notre image de marque. Rapide, sécurisé et très bien conçu.", image: 'https://picsum.photos/id/240/100/100' },
+  { name: 'Aïssatou Diallo', role: 'Entrepreneur', company: 'Sira Couture', quote: "Univers Web a transformé ma vision en une réalité numérique. Mon site vitrine est magnifique et attire de nouveaux clients chaque jour.", image: 'https://picsum.photos/id/40/100/100' },
+  { name: 'Moussa Diop', role: 'E-commerçant', company: 'Dakar Deals', quote: "Leur équipe a développé une boutique e-commerce robuste qui a doublé nos ventes en 6 mois. Un service impeccable.", image: 'https://picsum.photos/id/41/100/100' },
+  { name: 'Fatima Gueye', role: 'Directrice', company: 'Fondation Espoir', quote: "Le site créé pour notre ONG nous a permis de toucher plus de donateurs. Leur professionnalisme est remarquable.", image: 'https://picsum.photos/id/42/100/100' },
+  { name: 'Mouhamed Sow', role: 'Directeur Technique', company: 'SowDev Technologies', quote: "L'équipe a su traduire nos besoins complexes en un site d'entreprise performant et esthétique. Leur expertise technique est indéniable.", image: 'https://picsum.photos/id/43/100/100' },
+  { name: 'Aminata Fall', role: 'Gérante', company: 'Teranga Gastronomie', quote: "Notre site vitrine est une pure merveille. Il capture l'essence de notre cuisine et nous a apporté une visibilité incroyable. Merci Univers Web !", image: 'https://picsum.photos/id/44/100/100' },
+  { name: 'Ousmane Camara', role: 'CEO', company: 'Jokko Connect', quote: "Le site professionnel qu'ils ont bâti pour notre startup a été un atout majeur pour convaincre nos investisseurs. Professionnalisme et écoute au rendez-vous.", image: 'https://picsum.photos/id/45/100/100' },
 ];
 
 export const PROJECTS: Project[] = [
-    { id: 1, category: 'Site Web Vitrine', title: 'Cabinet d\'Avocats Alliance', imageUrl: 'https://source.unsplash.com/random/600x400?website,law,office' },
-    { id: 2, category: 'Site Entreprise', title: 'Sénégal Logistique Express', imageUrl: 'https://source.unsplash.com/random/600x400?website,logistics,corporate' },
-    { id: 3, category: 'Site E-commerce', title: 'AfroChic Marketplace', imageUrl: 'https://source.unsplash.com/random/600x400?website,ecommerce,fashion' },
-    { id: 4, category: 'Site ONG et Fondation', title: 'Fondation Soleil d\'Enfance', imageUrl: 'https://source.unsplash.com/random/600x400?website,charity,children' },
-    { id: 5, category: 'Site Web Vitrine', title: 'Studio Kélina Photographie', imageUrl: 'https://source.unsplash.com/random/600x400?website,photography,portfolio' },
-    { id: 6, category: 'Site E-commerce', title: 'Teranga Bio & Local', imageUrl: 'https://source.unsplash.com/random/600x400?website,food,market' },
-    { id: 7, category: 'Site Entreprise', title: 'Bati-Concept SA', imageUrl: 'https://source.unsplash.com/random/600x400?website,construction,architecture' },
-    { id: 8, category: 'Site ONG et Fondation', title: 'Action Verte Sahel', imageUrl: 'https://source.unsplash.com/random/600x400?website,environment,nonprofit' },
+    { id: 1, category: 'Site Web Vitrine', title: 'Cabinet d\'Avocats Alliance', imageUrl: 'https://source.unsplash.com/600x400/?law,website,modern' },
+    { id: 2, category: 'Site Entreprise', title: 'Sénégal Logistique Express', imageUrl: 'https://source.unsplash.com/600x400/?logistics,truck,senegal,website' },
+    { id: 3, category: 'Site E-commerce', title: 'AfroChic Marketplace', imageUrl: 'https://source.unsplash.com/600x400/?african,fashion,ecommerce,website' },
+    { id: 4, category: 'Site ONG et Fondation', title: 'Fondation Soleil d\'Enfance', imageUrl: 'https://source.unsplash.com/600x400/?charity,children,africa,website' },
+    { id: 5, category: 'Site Web Vitrine', title: 'Studio Kélina Photographie', imageUrl: 'https://source.unsplash.com/600x400/?photography,portfolio,website' },
+    { id: 6, category: 'Site E-commerce', title: 'Teranga Bio & Local', imageUrl: 'https://source.unsplash.com/600x400/?organic,food,market,senegal,website' },
+    { id: 7, category: 'Site Entreprise', title: 'Bati-Concept SA', imageUrl: 'https://source.unsplash.com/600x400/?construction,architecture,website,modern' },
+    { id: 8, category: 'Site ONG et Fondation', title: 'Action Verte Sahel', imageUrl: 'https://source.unsplash.com/600x400/?environment,sahel,ngo,website' },
 ];
 
 export const SOCIAL_LINKS = {

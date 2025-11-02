@@ -6,6 +6,7 @@ const Header: React.FC = () => {
 
   // FIX: Completed the navLinks array.
   const navLinks = [
+    { href: '#about', label: 'À Propos' },
     { href: '#services', label: 'Services' },
     { href: '#portfolio', label: 'Portfolio' },
     { href: '#testimonials', label: 'Témoignages' },

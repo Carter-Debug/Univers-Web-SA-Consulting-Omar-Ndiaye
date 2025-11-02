@@ -1,7 +1,11 @@
 import React from 'react';
 import { SERVICES } from '../constants';
 
-const Services: React.FC = () => {
+interface ServicesProps {
+    onSelectService: (serviceId: string) => void;
+}
+
+const Services: React.FC<ServicesProps> = ({ onSelectService }) => {
   return (
     <section id="services" className="py-20 bg-white">
       <div className="container mx-auto px-6">
@@ -24,12 +28,9 @@ const Services: React.FC = () => {
                   {service.discountedPrice.toLocaleString('fr-FR')} FCFA
                 </p>
                 <button 
-                    onClick={() => {
-                        const contact = document.querySelector('#contact');
-                        if (contact) contact.scrollIntoView({ behavior: 'smooth' });
-                    }}
+                    onClick={() => onSelectService(service.id)}
                     className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-4 rounded-full transition-colors duration-300">
-                  Choisir ce plan
+                  Ajouter au devis
                 </button>
               </div>
             </div>

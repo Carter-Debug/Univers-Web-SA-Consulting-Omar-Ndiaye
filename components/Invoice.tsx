@@ -1,6 +1,7 @@
 import React from 'react';
 import { InvoiceData } from '../types';
 import { CONTACT_INFO } from '../constants';
+import { SendIcon } from './Icons';
 
 interface InvoiceProps {
   data: InvoiceData;
@@ -10,6 +11,44 @@ interface InvoiceProps {
 const Invoice: React.FC<InvoiceProps> = ({ data, onNewRequest }) => {
   const handlePrint = () => {
     window.print();
+  };
+
+  const handleSendEmail = () => {
+    const subject = `Votre facture de Univers Web SA Consulting - N° ${data.invoiceNumber}`;
+    
+    const servicesText = data.services.map(s => 
+        `- ${s.title}: ${s.price.toLocaleString('fr-FR')} FCFA`
+    ).join('\n');
+
+    const body = `Bonjour ${data.clientName},
+
+Veuillez trouver ci-dessous les détails de votre facture pour les services fournis par Univers Web SA Consulting.
+
+Numéro de facture : ${data.invoiceNumber}
+Date : ${data.date}
+
+Détail des services :
+${servicesText}
+
+-----------------------------------
+Sous-total : ${data.subtotal.toLocaleString('fr-FR')} FCFA
+Réduction : ${data.discount > 0 ? `- ${data.discount.toLocaleString('fr-FR')} FCFA` : '0 FCFA'}
+Total à payer : ${data.total.toLocaleString('fr-FR')} FCFA
+-----------------------------------
+
+Le paiement peut être effectué via les options de paiement mobile ou par carte sur notre numéro commercial : ${CONTACT_INFO.phone}.
+
+Nous vous remercions de votre confiance.
+
+Cordialement,
+L'équipe d'Univers Web SA Consulting
+${CONTACT_INFO.email}
+${CONTACT_INFO.phone}
+${CONTACT_INFO.address}
+`;
+
+    const mailtoLink = `mailto:${data.clientEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailtoLink;
   };
 
   return (
@@ -77,7 +116,7 @@ const Invoice: React.FC<InvoiceProps> = ({ data, onNewRequest }) => {
         <p>Notre numéro commercial pour les transferts : <strong>{CONTACT_INFO.phone}</strong></p>
       </div>
 
-      <div className="mt-8 flex justify-end gap-4 print:hidden">
+      <div className="mt-8 flex flex-wrap justify-end gap-4 print:hidden">
         <button
           onClick={onNewRequest}
           className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full transition-colors"
@@ -88,7 +127,14 @@ const Invoice: React.FC<InvoiceProps> = ({ data, onNewRequest }) => {
           onClick={handlePrint}
           className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 rounded-full transition-colors"
         >
-          Imprimer la Facture
+          Imprimer
+        </button>
+        <button
+          onClick={handleSendEmail}
+          className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full transition-colors flex items-center gap-2"
+        >
+          <SendIcon className="w-5 h-5" />
+          Envoyer par Email
         </button>
       </div>
     </div>

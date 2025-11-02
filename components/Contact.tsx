@@ -3,13 +3,17 @@ import { SERVICES, PROMO_CODE, PAYMENT_METHODS, CONTACT_INFO } from '../constant
 import { InvoiceData } from '../types';
 import Invoice from './Invoice';
 
-const Contact: React.FC = () => {
+interface ContactProps {
+    selectedServices: string[];
+    setSelectedServices: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const Contact: React.FC<ContactProps> = ({ selectedServices, setSelectedServices }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [company, setCompany] = useState('');
   const [project, setProject] = useState('');
-  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [promo, setPromo] = useState('');
   const [isPromoValid, setIsPromoValid] = useState(false);
   const [invoiceData, setInvoiceData] = useState<InvoiceData | null>(null);
@@ -103,17 +107,28 @@ const Contact: React.FC = () => {
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                         {SERVICES.map(service => (
                             <label key={service.id} className={`p-4 rounded-md border text-center cursor-pointer transition-all ${selectedServices.includes(service.id) ? 'bg-indigo-600 border-indigo-500 text-white' : 'bg-gray-100 border-gray-300 hover:border-indigo-500'}`}>
-                            <input type="checkbox" className="hidden" onChange={() => handleServiceChange(service.id)} />
+                            <input type="checkbox" className="hidden" checked={selectedServices.includes(service.id)} onChange={() => handleServiceChange(service.id)} />
                             <span className="font-medium">{service.title}</span>
                             </label>
                         ))}
                         </div>
                     </div>
-                    <div className="flex flex-col md:flex-row gap-4 mb-6 items-center">
-                        <input type="text" value={promo} onChange={(e) => setPromo(e.target.value)} placeholder="Code Promo" className="bg-gray-100 p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-grow" />
-                        <button type="button" onClick={checkPromo} className="w-full md:w-auto bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-md transition-colors">Appliquer</button>
-                    </div>
+                    
+                    {totalPrice >= 500000 && (
+                        <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded-r-lg mb-6 transition-all duration-300">
+                            <h4 className="font-bold text-indigo-800">🎉 Félicitations pour votre projet d'envergure !</h4>
+                            <p className="text-indigo-700 mt-1">
+                                Pour les projets de plus de 500 000 FCFA, utilisez le code <code className="bg-indigo-200 text-indigo-900 font-mono py-0.5 px-1 rounded">{PROMO_CODE}</code> pour obtenir une réduction exceptionnelle de 50%.
+                            </p>
+                            <div className="flex flex-col md:flex-row gap-4 mt-4 items-center">
+                                <input type="text" value={promo} onChange={(e) => setPromo(e.target.value)} placeholder="Entrez le code promo" className="bg-white p-3 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 flex-grow w-full" />
+                                <button type="button" onClick={checkPromo} className="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-md transition-colors">Appliquer</button>
+                            </div>
+                        </div>
+                    )}
+
                     {isPromoValid && <p className="text-green-500 mb-4 text-center">🎉 Code promo de 50% appliqué avec succès !</p>}
+                    
                     <div className="text-center mb-6">
                         <p className="text-xl">Total estimé: <span className="font-bold text-2xl text-indigo-600">{finalPrice.toLocaleString('fr-FR')} FCFA</span></p>
                         {isPromoValid && totalPrice > 0 && <p className="text-gray-500 line-through">{totalPrice.toLocaleString('fr-FR')} FCFA</p>}
